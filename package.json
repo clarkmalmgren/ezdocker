@@ -1,0 +1,55 @@
+{
+  "name": "ezdocker",
+  "version": "0.0.1",
+  "description": "Makes building docker containers in javascript a breeze",
+  "main": "dist/ezdocker.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clarkmalmgren/ezdocker.git"
+  },
+  "keywords": [
+    "docker",
+    "build",
+    "easy",
+    "ez",
+    "gulp",
+    "container",
+    "image"
+  ],
+  "author": "Clark Malmgren <cmalmgren@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/clarkmalmgren/ezdocker/issues"
+  },
+  "homepage": "https://github.com/clarkmalmgren/ezdocker#readme",
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-jspm": "^0.5.6",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "jspm": "^0.16.25"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "src"
+    },
+    "dependencies": {
+      "chalk": "npm:chalk@^1.1.1",
+      "del": "npm:del@^2.2.0",
+      "dockerode": "npm:dockerode@^2.2.9",
+      "lodash": "npm:lodash@^4.0.1",
+      "os": "github:jspm/nodelibs-os@^0.1.0",
+      "stream": "github:jspm/nodelibs-stream@^0.1.0",
+      "tar-fs": "npm:tar-fs@^1.9.0"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}
