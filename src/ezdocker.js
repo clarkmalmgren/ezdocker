@@ -1,5 +1,8 @@
-import {_, Docker, stream, chalk} from 'common_dependencies';
-import TarUtils from 'tar-utils';
+import _ from 'lodash';
+import Docker from 'dockerode';
+import stream from 'stream';
+import chalk from 'chalk';
+import TarUtils from './tar-utils';
 
 class ImageBuilder {
 
@@ -140,5 +143,5 @@ const stream_parser = new stream.Writable({
   }
 });
 
-
-export default EZDocker;
+/* TODO: Figure out how to do this with a proper ES6 export */
+module.exports = EZDocker;

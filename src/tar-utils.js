@@ -1,4 +1,7 @@
-import {_, del, os, tar} from 'common_dependencies';
+import _ from 'lodash';
+import os from 'os';
+import del from 'del';
+import tar from 'tar-fs';
 
 /**
  * Utilities for generating a more complex tar stream. Specifically, this allows for putting multiple
@@ -75,7 +78,7 @@ class TarUtils {
    * @return {Promise} a promise that resolves when all files have been copied
    */
   copy(from, to) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       var extract = this._tar.extract(to);
       extract.on('finish', () => { resolve(); });
       this._tar.pack(from).pipe(extract);

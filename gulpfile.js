@@ -4,8 +4,8 @@
   var del = require('del'),
       gulp = require('gulp'),
       jspm = require('gulp-jspm'),
+      babel = require('gulp-babel'),
       mocha = require('gulp-mocha'),
-      rename = require('gulp-rename'),
       sourcemaps = require('gulp-sourcemaps');
 
   gulp.task('clean', function() {
@@ -17,13 +17,9 @@
   });
 
   gulp.task('build', function() {
-    return gulp.src('src/index.js')
+    return gulp.src(['src/ezdocker.js', 'src/tar-utils.js'])
       .pipe(sourcemaps.init())
-      .pipe(jspm({
-        //arithmetic: '- common_dependencies',
-        selfExecutingBundle: true
-      }))
-      .pipe(rename('ezdocker.js'))
+        .pipe(babel({ presets: ['es2015'] }))
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest('dist'));
   });
