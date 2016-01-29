@@ -12,16 +12,24 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+  buildCSS: false,
 
   map: {
     "babel": "npm:babel-core@5.8.35",
     "babel-runtime": "npm:babel-runtime@5.8.35",
+    "chai": "npm:chai@3.5.0",
+    "chai-as-promised": "npm:chai-as-promised@5.2.0",
+    "chai-string": "npm:chai-string@1.1.6",
     "chalk": "npm:chalk@1.1.1",
     "core-js": "npm:core-js@1.2.6",
     "del": "npm:del@2.2.0",
     "dockerode": "npm:dockerode@2.2.9",
     "lodash": "npm:lodash@4.0.1",
+    "mocha": "npm:mocha@2.4.5",
     "os": "github:jspm/nodelibs-os@0.1.0",
+    "sinon": "npm:sinon@1.17.3",
+    "sinon-as-promised": "npm:sinon-as-promised@4.0.0",
+    "sinon-chai": "npm:sinon-chai@2.8.0",
     "stream": "github:jspm/nodelibs-stream@0.1.0",
     "tar-fs": "npm:tar-fs@1.9.0",
     "github:jspm/nodelibs-assert@0.1.0": {
@@ -164,7 +172,7 @@ System.config({
       "create-hash": "npm:create-hash@1.1.2",
       "create-hmac": "npm:create-hmac@1.1.4",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
-      "elliptic": "npm:elliptic@6.2.2",
+      "elliptic": "npm:elliptic@6.2.3",
       "inherits": "npm:inherits@2.0.1",
       "parse-asn1": "npm:parse-asn1@5.0.0",
       "stream": "github:jspm/nodelibs-stream@0.1.0"
@@ -180,6 +188,20 @@ System.config({
       "ieee754": "npm:ieee754@1.1.6",
       "isarray": "npm:isarray@1.0.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:chai-as-promised@5.2.0": {
+      "chai": "npm:chai@3.5.0"
+    },
+    "npm:chai-string@1.1.6": {
+      "chai": "npm:chai@3.5.0"
+    },
+    "npm:chai@3.5.0": {
+      "assertion-error": "npm:assertion-error@1.0.1",
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "deep-eql": "npm:deep-eql@0.1.3",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0",
+      "type-detect": "npm:type-detect@1.0.0"
     },
     "npm:chalk@1.1.1": {
       "ansi-styles": "npm:ansi-styles@2.1.0",
@@ -211,7 +233,7 @@ System.config({
       "bn.js": "npm:bn.js@4.9.0",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
-      "elliptic": "npm:elliptic@6.2.2"
+      "elliptic": "npm:elliptic@6.2.3"
     },
     "npm:create-hash@1.1.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -229,6 +251,10 @@ System.config({
       "inherits": "npm:inherits@2.0.1",
       "stream": "github:jspm/nodelibs-stream@0.1.0"
     },
+    "npm:create-thenable@1.0.1": {
+      "object-omit": "npm:object-omit@1.0.0",
+      "unique-concat": "npm:unique-concat@0.2.2"
+    },
     "npm:crypto-browserify@3.11.0": {
       "browserify-cipher": "npm:browserify-cipher@1.0.0",
       "browserify-sign": "npm:browserify-sign@4.0.0",
@@ -244,6 +270,10 @@ System.config({
     "npm:debug@0.7.4": {
       "process": "github:jspm/nodelibs-process@0.1.2",
       "tty": "github:jspm/nodelibs-tty@0.1.0"
+    },
+    "npm:deep-eql@0.1.3": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "type-detect": "npm:type-detect@0.1.1"
     },
     "npm:del@2.2.0": {
       "globby": "npm:globby@4.0.0",
@@ -286,7 +316,7 @@ System.config({
       "docker-modem": "npm:docker-modem@0.3.0",
       "events": "github:jspm/nodelibs-events@0.1.1"
     },
-    "npm:elliptic@6.2.2": {
+    "npm:elliptic@6.2.3": {
       "bn.js": "npm:bn.js@4.9.0",
       "brorand": "npm:brorand@1.0.5",
       "hash.js": "npm:hash.js@1.0.3",
@@ -311,6 +341,13 @@ System.config({
       "https": "github:jspm/nodelibs-https@0.1.0",
       "underscore": "npm:underscore@1.8.3",
       "url": "github:jspm/nodelibs-url@0.1.0"
+    },
+    "npm:for-own@0.1.3": {
+      "for-in": "npm:for-in@0.1.4"
+    },
+    "npm:formatio@1.1.1": {
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "samsam": "npm:samsam@1.1.2"
     },
     "npm:glob@6.0.4": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
@@ -384,6 +421,19 @@ System.config({
       "minimist": "npm:minimist@0.0.8",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:mocha@2.4.5": {
+      "css": "github:systemjs/plugin-css@0.1.20"
+    },
+    "npm:native-promise-only@0.7.8-a": {
+      "child_process": "github:jspm/nodelibs-child_process@0.1.0",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:object-omit@1.0.0": {
+      "for-own": "npm:for-own@0.1.3",
+      "isobject": "npm:isobject@0.2.0"
     },
     "npm:once@1.3.3": {
       "wrappy": "npm:wrappy@1.0.1"
@@ -506,6 +556,24 @@ System.config({
       "inherits": "npm:inherits@2.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
+    "npm:sinon-as-promised@4.0.0": {
+      "create-thenable": "npm:create-thenable@1.0.1",
+      "native-promise-only": "npm:native-promise-only@0.7.8-a",
+      "sinon": "npm:sinon@1.17.3"
+    },
+    "npm:sinon-chai@2.8.0": {
+      "chai": "npm:chai@3.5.0",
+      "sinon": "npm:sinon@1.17.3"
+    },
+    "npm:sinon@1.17.3": {
+      "crypto": "github:jspm/nodelibs-crypto@0.1.0",
+      "formatio": "npm:formatio@1.1.1",
+      "lolex": "npm:lolex@1.3.2",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "samsam": "npm:samsam@1.1.2",
+      "util": "npm:util@0.10.3"
+    },
     "npm:split-ca@1.0.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2"
     },
@@ -549,6 +617,9 @@ System.config({
     },
     "npm:timers-browserify@1.4.2": {
       "process": "npm:process@0.11.2"
+    },
+    "npm:unique-concat@0.2.2": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:url@0.10.3": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",

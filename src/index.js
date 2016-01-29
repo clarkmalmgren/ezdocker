@@ -3,10 +3,11 @@ import TarUtils from 'tar-utils';
 
 class ImageBuilder {
 
-  constructor() {
+  constructor(ezdocker) {
     this._repo = undefined;
     this._tag = undefined;
     this._paths = {};
+    this._ezdocker = ezdocker;
   }
 
   repository(repo) {
@@ -29,22 +30,23 @@ class ImageBuilder {
   }
 
   build() {
-    return EZDocker.buildImage(this);
+    return this._ezdocker.buildImage(this);
   }
 }
 
 class EZDocker {
 
-  constructor(connectionOpts) {
-    this._docker = new Docker(connectionOpts);
+  constructor(connectionOpts, docker, tarUtils = new TarUtils()) {
+    this._docker = docker || new Docker(connectionOpts);
+    this._tarUtils = tarUtils;
   }
 
   imageBuilder() {
-    return new ImageBuilder();
+    return new ImageBuilder(this);
   }
 
   buildImage(imageBuilder) {
-    return TarUtils.all(imageBuilder._paths)
+    return this._tarUtils.all(imageBuilder._paths)
       .then((stream) => {
         return new Promise((resolve, reject) => {
           this._docker.buildImage(stream, {t: imageBuilder.getFullTag()}, (error, response) => {
