@@ -4,7 +4,7 @@
   "description": "Makes building docker containers in javascript a breeze",
   "main": "dist/ezdocker.js",
   "scripts": {
-    "test": "gulp coverage"
+    "test": "gulp ci"
   },
   "repository": {
     "type": "git",
