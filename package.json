@@ -1,6 +1,6 @@
 {
   "name": "ezdocker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Makes building docker containers in javascript a breeze",
   "main": "dist/ezdocker.js",
   "scripts": {
