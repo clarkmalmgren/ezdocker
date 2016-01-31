@@ -2,6 +2,7 @@ import _ from 'lodash';
 import Docker from 'dockerode';
 import stream from 'stream';
 import chalk from 'chalk';
+import { argv } from 'yargs';
 import TarUtils from './tar-utils';
 
 class ImageBuilder {
@@ -38,6 +39,10 @@ class ImageBuilder {
 }
 
 class EZDocker {
+
+  static createFromArgs() {
+    return new EZDocker(argv.docker);
+  }
 
   constructor(connectionOpts, docker, tarUtils = new TarUtils()) {
     this._docker = docker || new Docker(connectionOpts);
@@ -79,7 +84,7 @@ class EZDocker {
     return new Promise((resolve, reject) => {
       this._docker.listImages({filter: repository}, (error, response) => {
         if (error) {
-          console.log(chalk.red('(Docker) Listing Docker Images Failed: ' + error.message));
+          Log.error('Listing Docker Images Failed: ' + error.message);
           reject(error);
         } else {
           resolve(response);
@@ -93,16 +98,16 @@ class EZDocker {
       this._docker.getImage(id).remove({}, (error, response) => {
         if (error) {
           if (error.statusCode == 404) {
-            console.log(chalk.blue('(Docker) ') + 'No docker images to remove.');
+            Log.info('No docker images to remove.');
           } else {
-            console.log(chalk.red('(Docker) Removing Docker Image Failed: ' + error.message));
+            Log.error('Removing Docker Image Failed: ' + error.message);
             reject(error);
           }
         } else {
-          console.log(chalk.blue('(Docker) ') + 'Removing Image ' + id);
+          Log.info('Removing Image ' + id);
           _.forEach(response, (step) => {
             _.forEach(step, (target, action) => {
-              console.log(chalk.blue('(Docker)   ') + action + ' ' + target);
+              Log.info('  ' + action + ' ' + target);
             });
           });
           resolve();
@@ -115,11 +120,13 @@ class EZDocker {
     return new Promise((resolve, reject) => {
       this._docker.getImage(repository).push({}, (error, response) => {
         if (error) {
-          console.log(chalk.red('(Docker) Pushing Docker Image(s) Failed: ' + error.message));
+          Log.error('Pushing Docker Image(s) Failed: ' + error.message);
           reject(error);
         } else {
           response.pipe(stream_parser);
-          response.on('end', () => { resolve(); });
+          response.on('end', () => {
+            resolve();
+          });
         }
       });
     });
@@ -127,21 +134,44 @@ class EZDocker {
 }
 
 const stream_parser = new stream.Writable({
-  write: function(chunk, encoding, next) {
+  write: function (chunk, encoding, next) {
     var data = JSON.parse(chunk.toString());
 
-    var msg = '';
     if (data.stream) {
       data.stream = data.stream.replace(/\n$/, '');
-      msg +=  chalk.blue('(Docker) ') + data.stream;
+      Log.info(data.stream);
     } else {
-      msg += chalk.blue('(Docker RAW) ') + JSON.stringify(data);
+      Log.info(chalk.blue('RAW: ') + JSON.stringify(data));
     }
 
-    console.log(msg);
     next();
   }
 });
 
+class Log {
+
+  static info(msg) {
+    Log.log(chalk.blue('(Docker) ') + msg);
+  }
+
+  static error(msg) {
+    Log.log(chalk.red('(Docker) ' + msg));
+  }
+
+  static log(msg) {
+    let date = new Date();
+    let time = `${Log.pad(date.getHours())}:${Log.pad(date.getMinutes())}:${Log.pad(date.getSeconds())}`;
+    console.log(`[${chalk.gray(time)}] ${msg}`);
+  }
+
+  static pad(num, digits = 2) {
+    let s = `${num}`;
+    while (s.length < digits) {
+      s = '0' + s;
+    }
+    return s;
+  }
+}
+
 /* TODO: Figure out how to do this with a proper ES6 export */
-module.exports = EZDocker;
+export default EZDocker;
