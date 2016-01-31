@@ -17,8 +17,8 @@
     return del(['build']);
   });
 
-  gulp.task('dist-clean', function() {
-    return del(['dist']);
+  gulp.task('dist-clean', ['clean'], function() {
+    return del(['dist', 'dist_test']);
   });
 
   gulp.task('build', function() {

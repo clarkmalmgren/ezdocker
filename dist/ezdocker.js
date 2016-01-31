@@ -2,6 +2,10 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -17,6 +21,8 @@ var _stream2 = _interopRequireDefault(_stream);
 var _chalk = require('chalk');
 
 var _chalk2 = _interopRequireDefault(_chalk);
+
+var _yargs = require('yargs');
 
 var _tarUtils = require('./tar-utils');
 
@@ -70,6 +76,13 @@ var ImageBuilder = function () {
 }();
 
 var EZDocker = function () {
+  _createClass(EZDocker, null, [{
+    key: 'createFromArgs',
+    value: function createFromArgs() {
+      return new EZDocker(_yargs.argv.docker);
+    }
+  }]);
+
   function EZDocker(connectionOpts, docker) {
     var tarUtils = arguments.length <= 2 || arguments[2] === undefined ? new _tarUtils2.default() : arguments[2];
 
@@ -123,7 +136,7 @@ var EZDocker = function () {
       return new Promise(function (resolve, reject) {
         _this3._docker.listImages({ filter: repository }, function (error, response) {
           if (error) {
-            console.log(_chalk2.default.red('(Docker) Listing Docker Images Failed: ' + error.message));
+            Log.error('Listing Docker Images Failed: ' + error.message);
             reject(error);
           } else {
             resolve(response);
@@ -140,16 +153,16 @@ var EZDocker = function () {
         _this4._docker.getImage(id).remove({}, function (error, response) {
           if (error) {
             if (error.statusCode == 404) {
-              console.log(_chalk2.default.blue('(Docker) ') + 'No docker images to remove.');
+              Log.info('No docker images to remove.');
             } else {
-              console.log(_chalk2.default.red('(Docker) Removing Docker Image Failed: ' + error.message));
+              Log.error('Removing Docker Image Failed: ' + error.message);
               reject(error);
             }
           } else {
-            console.log(_chalk2.default.blue('(Docker) ') + 'Removing Image ' + id);
+            Log.info('Removing Image ' + id);
             _lodash2.default.forEach(response, function (step) {
               _lodash2.default.forEach(step, function (target, action) {
-                console.log(_chalk2.default.blue('(Docker)   ') + action + ' ' + target);
+                Log.info('  ' + action + ' ' + target);
               });
             });
             resolve();
@@ -165,7 +178,7 @@ var EZDocker = function () {
       return new Promise(function (resolve, reject) {
         _this5._docker.getImage(repository).push({}, function (error, response) {
           if (error) {
-            console.log(_chalk2.default.red('(Docker) Pushing Docker Image(s) Failed: ' + error.message));
+            Log.error('Pushing Docker Image(s) Failed: ' + error.message);
             reject(error);
           } else {
             response.pipe(stream_parser);
@@ -185,19 +198,56 @@ var stream_parser = new _stream2.default.Writable({
   write: function write(chunk, encoding, next) {
     var data = JSON.parse(chunk.toString());
 
-    var msg = '';
     if (data.stream) {
       data.stream = data.stream.replace(/\n$/, '');
-      msg += _chalk2.default.blue('(Docker) ') + data.stream;
+      Log.info(data.stream);
     } else {
-      msg += _chalk2.default.blue('(Docker RAW) ') + JSON.stringify(data);
+      Log.info(_chalk2.default.blue('RAW: ') + JSON.stringify(data));
     }
 
-    console.log(msg);
     next();
   }
 });
 
+var Log = function () {
+  function Log() {
+    _classCallCheck(this, Log);
+  }
+
+  _createClass(Log, null, [{
+    key: 'info',
+    value: function info(msg) {
+      Log.log(_chalk2.default.blue('(Docker) ') + msg);
+    }
+  }, {
+    key: 'error',
+    value: function error(msg) {
+      Log.log(_chalk2.default.red('(Docker) ' + msg));
+    }
+  }, {
+    key: 'log',
+    value: function log(msg) {
+      var date = new Date();
+      var time = Log.pad(date.getHours()) + ':' + Log.pad(date.getMinutes()) + ':' + Log.pad(date.getSeconds());
+      console.log('[' + _chalk2.default.gray(time) + '] ' + msg);
+    }
+  }, {
+    key: 'pad',
+    value: function pad(num) {
+      var digits = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
+
+      var s = '' + num;
+      while (s.length < digits) {
+        s = '0' + s;
+      }
+      return s;
+    }
+  }]);
+
+  return Log;
+}();
+
 /* TODO: Figure out how to do this with a proper ES6 export */
-module.exports = EZDocker;
+
+exports.default = EZDocker;
 //# sourceMappingURL=ezdocker.js.map
