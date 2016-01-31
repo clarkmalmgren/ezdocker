@@ -8,6 +8,9 @@
       mocha = require('gulp-mocha'),
       sourcemaps = require('gulp-sourcemaps');
 
+  /* Require this to ensure that mocha runs using es6 */
+  require('babel-core/register');
+
   gulp.task('clean', function() {
     return del(['build']);
   });
@@ -19,24 +22,13 @@
   gulp.task('build', function() {
     return gulp.src(['src/ezdocker.js', 'src/tar-utils.js'])
       .pipe(sourcemaps.init())
-        .pipe(babel({ presets: ['es2015'] }))
+        .pipe(babel())
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest('dist'));
   });
 
-  gulp.task('build-tests', function() {
-    return gulp.src('src/index.spec.js')
-      .pipe(sourcemaps.init())
-      .pipe(jspm({selfExecutingBundle: true}))
-      .pipe(rename('test.bundle.js'))
-      .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest('build'));
-  });
-
-
-
-  gulp.task('test', ['build-tests'], function() {
-    return gulp.src('build/test.bundle.js')
+  gulp.task('test', function() {
+    return gulp.src('src/*.js')
       .pipe(mocha({reporter: 'nyan'}));
   });
 
