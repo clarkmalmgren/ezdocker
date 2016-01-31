@@ -1,5 +1,5 @@
 import {sinon} from './test_dependencies';
-import TarUtils from './tar-utils';
+import TarUtils from '../dist/tar-utils';
 
 describe('TarUtils', () => {
 

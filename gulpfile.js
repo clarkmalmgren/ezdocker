@@ -2,13 +2,13 @@
   'use strict';
 
   var del = require('del'),
-      gulp = require('gulp'),
-      jspm = require('gulp-jspm'),
-      babel = require('gulp-babel'),
-      mocha = require('gulp-mocha'),
-      istanbul = require('gulp-istanbul'),
-      coveralls = require('gulp-coveralls'),
-      sourcemaps = require('gulp-sourcemaps');
+    gulp = require('gulp'),
+    jspm = require('gulp-jspm'),
+    babel = require('gulp-babel'),
+    mocha = require('gulp-mocha'),
+    istanbul = require('gulp-istanbul'),
+    coveralls = require('gulp-coveralls'),
+    sourcemaps = require('gulp-sourcemaps');
 
   /* Require this to ensure that mocha runs using es6 */
   require('babel-core/register');
@@ -24,28 +24,28 @@
   gulp.task('build', function() {
     return gulp.src(['src/ezdocker.js', 'src/tar-utils.js'])
       .pipe(sourcemaps.init())
-        .pipe(babel())
+      .pipe(babel())
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest('dist'));
   });
 
   gulp.task('test:build', function() {
-    return gulp.src(['src/*.js', 'src/*.js'])
+    return gulp.src(['test/*.js'])
       .pipe(sourcemaps.init())
-        .pipe(babel())
+      .pipe(babel())
       .pipe(sourcemaps.write())
-      .pipe(gulp.dest('build/es5'));
+      .pipe(gulp.dest('dist_test'));
 
   });
 
-  gulp.task('test:instrument', ['test:build'], function() {
-    return gulp.src(['build/es5/ezdocker.js', 'build/es5/tar-utils.js'])
+  gulp.task('test:instrument', ['build', 'test:build'], function() {
+    return gulp.src(['dist/*.js'])
       .pipe(istanbul())
       .pipe(istanbul.hookRequire());
   });
 
   gulp.task('test', ['test:instrument'], function() {
-    return gulp.src('build/es5/*.js')
+    return gulp.src('dist_test/*.js')
       .pipe(mocha())
       .pipe(istanbul.writeReports({
         dir: './build/coverage',
