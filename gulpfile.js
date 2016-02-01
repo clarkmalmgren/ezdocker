@@ -2,11 +2,13 @@
   'use strict';
 
   var del = require('del'),
-      gulp = require('gulp'),
-      jspm = require('gulp-jspm'),
-      babel = require('gulp-babel'),
-      mocha = require('gulp-mocha'),
-      sourcemaps = require('gulp-sourcemaps');
+    gulp = require('gulp'),
+    jspm = require('gulp-jspm'),
+    babel = require('gulp-babel'),
+    mocha = require('gulp-mocha'),
+    istanbul = require('gulp-istanbul'),
+    coveralls = require('gulp-coveralls'),
+    sourcemaps = require('gulp-sourcemaps');
 
   /* Require this to ensure that mocha runs using es6 */
   require('babel-core/register');
@@ -15,21 +17,45 @@
     return del(['build']);
   });
 
-  gulp.task('dist-clean', function() {
-    return del(['dist']);
+  gulp.task('dist-clean', ['clean'], function() {
+    return del(['dist', 'dist_test']);
   });
 
   gulp.task('build', function() {
     return gulp.src(['src/ezdocker.js', 'src/tar-utils.js'])
       .pipe(sourcemaps.init())
-        .pipe(babel())
+      .pipe(babel())
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest('dist'));
   });
 
-  gulp.task('test', function() {
-    return gulp.src('src/*.js')
-      .pipe(mocha({reporter: 'nyan'}));
+  gulp.task('test:build', function() {
+    return gulp.src(['test/*.js'])
+      .pipe(sourcemaps.init())
+      .pipe(babel())
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('dist_test'));
+
+  });
+
+  gulp.task('test:instrument', ['build', 'test:build'], function() {
+    return gulp.src(['dist/*.js'])
+      .pipe(istanbul())
+      .pipe(istanbul.hookRequire());
+  });
+
+  gulp.task('test', ['test:instrument'], function() {
+    return gulp.src('dist_test/*.js')
+      .pipe(mocha())
+      .pipe(istanbul.writeReports({
+        dir: './build/coverage',
+        reporters: ['lcovonly', 'html', 'text-summary']
+      }));
+  });
+
+  gulp.task('ci', [ 'test' ], function() {
+    return gulp.src('build/coverage/lcov.info')
+      .pipe(coveralls());
   });
 
 })();
