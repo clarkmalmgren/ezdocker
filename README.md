@@ -105,6 +105,24 @@ $ npm docker:build-image --docker.host=192.168.1.30 --docker.port=3000 --docker.
 
 EZDocker also supports pushing and removing images.
 
+```javascript
+import EZDocker from 'ezdocker';
+
+new EZDocker().imageRemover()
+  .registry('docker.registry.my.company.com')
+  .port(5000)
+  .user('my-team')
+  .repo('my-project')
+  .remove();
+
+new EZDocker().imagePusher()
+  .registry('docker.registry.my.company.com')
+  .port(5000)
+  .user('my-team')
+  .repo('my-project')
+  .push();
+```
+
 ## Installation
 
 ```bash
