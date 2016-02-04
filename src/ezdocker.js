@@ -196,10 +196,12 @@ class EZDocker {
   /**
    * Creates a EZDocker using command line arguments.
    *
+   * @param {{}} [args=argv] the arguments that default to those from yargs.argv
+   *
    * @return {EZDocker}
    */
-  static createFromArgs() {
-    return new EZDocker(argv.docker);
+  static createFromArgs(args = argv) {
+    return new EZDocker(args.docker);
   }
 
   /**
