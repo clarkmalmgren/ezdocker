@@ -59,6 +59,9 @@
   });
 
   gulp.task('ci', [ 'test' ], function() {
+    console.log('TRAVIS_JOB_ID: ' + process.env.TRAVIS_JOB_ID);
+    console.log('COVERALLS_SERVICE_NAME: ' + process.env.COVERALLS_SERVICE_NAME);
+    console.log('COVERALLS_SERVICE_JOB_ID: ' + process.env.COVERALLS_SERVICE_JOB_ID);
     return gulp.src('build/coverage/lcov.info')
       .pipe(coveralls());
   });
