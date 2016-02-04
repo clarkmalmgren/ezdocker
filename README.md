@@ -1,10 +1,10 @@
 # EZDocker
 
-[![license:mit](https://img.shields.io/badge/license-mit-green.svg)]()
-[![Travis](https://img.shields.io/travis/clarkmalmgren/ezdocker.svg)]()
-[![Coveralls](https://img.shields.io/coveralls/clarkmalmgren/ezdocker.svg)]()
-[![npm](https://img.shields.io/npm/dt/ezdocker.svg)]()
-[![npm](https://img.shields.io/npm/v/ezdocker.svg)]()
+[![license:mit](https://img.shields.io/badge/license-mit-green.svg)](./LICENSE)
+[![Build Status](https://travis-ci.org/clarkmalmgren/ezdocker.svg?branch=develop)](https://travis-ci.org/clarkmalmgren/ezdocker)
+[![Coverage Status](https://coveralls.io/repos/github/clarkmalmgren/ezdocker/badge.svg?branch=develop)](https://coveralls.io/github/clarkmalmgren/ezdocker?branch=develop)
+[![npm](https://img.shields.io/npm/dt/ezdocker.svg)](https://www.npmjs.com/package/ezdocker)
+[![npm](https://img.shields.io/npm/v/ezdocker.svg)](https://www.npmjs.com/package/ezdocker)
 
 EZDocker provides an easy and intuitive way to build docker images in JavaScript. This builds upon
 [Dockerode](https://github.com/apocas/dockerode) to provide build patterns and output formatting to improve
