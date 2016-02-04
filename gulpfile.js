@@ -59,11 +59,19 @@
   });
 
   gulp.task('ci', [ 'test' ], function() {
-    console.log('TRAVIS_JOB_ID: ' + process.env.TRAVIS_JOB_ID);
-    console.log('COVERALLS_SERVICE_NAME: ' + process.env.COVERALLS_SERVICE_NAME);
-    console.log('COVERALLS_SERVICE_JOB_ID: ' + process.env.COVERALLS_SERVICE_JOB_ID);
+    logEnvironment();
     return gulp.src('build/coverage/lcov.info')
       .pipe(coveralls());
   });
+
+  function logEnvironment() {
+    console.log('--------------------------');
+    console.log('TRAVIS: ' + process.env.TRAVIS);
+    console.log('TRAVIS_JOB_ID: ' + process.env.TRAVIS_JOB_ID);
+    console.log('TRAVIS_BRANCH: ' + process.env.TRAVIS_BRANCH);
+    console.log('--------------------------');
+  }
+
+  logEnvironment();
 
 })();
