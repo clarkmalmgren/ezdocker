@@ -29,6 +29,7 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.4.3",
     "chai": "^3.5.0",
+    "chai-as-promised": "^5.2.0",
     "chai-string": "^1.1.6",
     "del": "^2.2.0",
     "gulp": "^3.9.0",
