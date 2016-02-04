@@ -7,6 +7,7 @@
     babel = require('gulp-babel'),
     esdoc = require('gulp-esdoc'),
     mocha = require('gulp-mocha'),
+    plumber = require('gulp-plumber'),
     istanbul = require('gulp-istanbul'),
     coveralls = require('gulp-coveralls'),
     sourcemaps = require('gulp-sourcemaps');
@@ -61,7 +62,9 @@
   gulp.task('ci', [ 'test' ], function() {
     logEnvironment();
     return gulp.src('build/coverage/lcov.info')
-      .pipe(coveralls());
+      .pipe(plumber())
+      .pipe(coveralls())
+      .pipe(plumber.stop());
   });
 
   function logEnvironment() {
