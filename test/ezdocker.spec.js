@@ -251,7 +251,7 @@ describe('EZDocker', () => {
       let promise = ez._listImages('dude');
 
       // then:
-      return promise.should.eventually.be.fulfilled.and.equal('my list of dudes');
+      return promise.should.eventually.equal('my list of dudes');
     });
 
     it('should reject as a promise', () => {
@@ -272,4 +272,70 @@ describe('EZDocker', () => {
 
   });
 
+  describe('removing an image', () => {
+
+    it('should succeed as a promise', () => {
+      // given:
+      let response = [
+        { '9a34b': 'removed'},
+        { '1.1.1': 'un-tagged'}
+      ];
+
+      let image = {
+        remove: sinon.stub().callsArgWith(1, undefined, response)
+      };
+
+      let docker = {
+        getImage: sinon.stub().withArgs('bro').returns(image)
+      };
+
+      // when:
+      let ez = new EZDocker(undefined, docker);
+      let promise = ez.removeImage('bro');
+
+      // then:
+      promise.should.eventually.be.fulfilled;
+    });
+
+    it('should succeed as a promise when there is nothing to do', () => {
+      // given:
+      let error = { statusCode: 404 };
+
+      let image = {
+        remove: sinon.stub().callsArgWith(1, error)
+      };
+
+      let docker = {
+        getImage: sinon.stub().withArgs('bro').returns(image)
+      };
+
+      // when:
+      let ez = new EZDocker(undefined, docker);
+      let promise = ez.removeImage('bro');
+
+      // then:
+      promise.should.eventually.be.fulfilled;
+    });
+
+    it('should reject as a promise on badness', () => {
+      // given:
+      let error = new Error('oh noes');
+
+      let image = {
+        remove: sinon.stub().callsArgWith(1, error)
+      };
+
+      let docker = {
+        getImage: sinon.stub().withArgs('bro').returns(image)
+      };
+
+      // when:
+      let ez = new EZDocker(undefined, docker);
+      let promise = ez.removeImage('bro');
+
+      // then:
+      promise.should.eventually.be.rejectedWith(Error, 'oh noes');
+    });
+
+  });
 });

@@ -317,6 +317,7 @@ class EZDocker {
         if (error) {
           if (error.statusCode == 404) {
             Log.info('No docker images to remove.');
+            resolve();
           } else {
             Log.error('Removing Docker Image Failed: ' + error.message);
             reject(error);
