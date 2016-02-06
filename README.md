@@ -35,7 +35,7 @@ configuration from command line arguments:
 (function() {
 
   var gulp = require('gulp'),
-      ezdocker = require('ezdocker').default; // Note that in ES5, EZDocker is bound to ".default"
+      EZDocker = require('ezdocker').default; // Note that in ES5, EZDocker is bound to ".default"
 
   gulp.task('docker:build-image', function() {
     return EZDocker.createFromArgs().imageBuilder()
