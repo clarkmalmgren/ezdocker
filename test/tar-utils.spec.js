@@ -1,4 +1,4 @@
-import {sinon} from './test_dependencies';
+import { expect, sinon } from './test_dependencies';
 import TarUtils from '../dist/tar-utils';
 
 describe('TarUtils', () => {
@@ -7,6 +7,10 @@ describe('TarUtils', () => {
     if (Math.random.restore) {
       Math.random.restore();
     }
+  });
+
+  it('cannot be instantiated as a function', () => {
+    expect(() => TarUtils()).to.throw(TypeError, 'Cannot call a class as a function');
   });
 
   describe('temporary folder generation', () => {

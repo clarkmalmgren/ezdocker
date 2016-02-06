@@ -60,21 +60,10 @@
   });
 
   gulp.task('ci', [ 'test' ], function() {
-    logEnvironment();
     return gulp.src('build/coverage/lcov.info')
       .pipe(plumber())
       .pipe(coveralls())
       .pipe(plumber.stop());
   });
-
-  function logEnvironment() {
-    console.log('--------------------------');
-    console.log('TRAVIS: ' + process.env.TRAVIS);
-    console.log('TRAVIS_JOB_ID: ' + process.env.TRAVIS_JOB_ID);
-    console.log('TRAVIS_BRANCH: ' + process.env.TRAVIS_BRANCH);
-    console.log('--------------------------');
-  }
-
-  logEnvironment();
 
 })();

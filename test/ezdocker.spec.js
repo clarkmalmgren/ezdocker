@@ -1,5 +1,6 @@
-import {sinon} from './test_dependencies';
+import { expect, sinon } from './test_dependencies';
 import { argv } from 'yargs';
+import chalk from 'chalk';
 import { NameBuilder, ImageBuilder, ImageRemover, ImagePusher, EZDocker, Log, stream_parser } from '../dist/ezdocker';
 
 describe('NameBuilder', () => {
@@ -91,7 +92,7 @@ describe('EZDocker', () => {
 
   it('can be newed', () => {
     let ez = new EZDocker();
-    ez.should.exist;
+    return ez.should.exist;
   });
 
   it('can be created from arguments', () => {
@@ -103,6 +104,18 @@ describe('EZDocker', () => {
 
     // then:
     ez._docker.modem.host.should.equal('compy.386');
+  });
+
+  it('can be created from real arguments', () => {
+    // when:
+    let ez = EZDocker.createFromArgs();
+
+    // then:
+    return ez.should.exist;
+  });
+
+  it('cannot be instantiated as a function', () => {
+    expect(() => EZDocker()).to.throw(TypeError, 'Cannot call a class as a function');
   });
 
   it('can create all of the builders', () => {
@@ -201,7 +214,6 @@ describe('EZDocker', () => {
   });
 
 
-
   describe('removing all images', () => {
 
     it('should simply tie listing to removing', () => {
@@ -267,7 +279,7 @@ describe('EZDocker', () => {
       let promise = ez._listImages('dude');
 
       // then:
-      promise.should.eventually.be.rejectedWith(Error, 'blah');
+      return promise.should.eventually.be.rejectedWith(Error, 'blah');
     });
 
   });
@@ -294,7 +306,7 @@ describe('EZDocker', () => {
       let promise = ez.removeImage('bro');
 
       // then:
-      promise.should.eventually.be.fulfilled;
+      return promise.should.eventually.be.fulfilled;
     });
 
     it('should succeed as a promise when there is nothing to do', () => {
@@ -314,7 +326,7 @@ describe('EZDocker', () => {
       let promise = ez.removeImage('bro');
 
       // then:
-      promise.should.eventually.be.fulfilled;
+      return promise.should.eventually.be.fulfilled;
     });
 
     it('should reject as a promise on badness', () => {
@@ -334,8 +346,101 @@ describe('EZDocker', () => {
       let promise = ez.removeImage('bro');
 
       // then:
-      promise.should.eventually.be.rejectedWith(Error, 'oh noes');
+      return promise.should.eventually.be.rejectedWith(Error, 'oh noes');
     });
 
   });
+
+  describe('pushing images', () => {
+
+    it('should succeed as a promise', () => {
+      // given:
+      let response = {
+        pipe: sinon.spy(),
+        on: sinon.stub().withArgs('end').callsArg(1)
+      };
+
+      let image = {
+        push: sinon.stub().callsArgWith(1, undefined, response)
+      };
+
+      let docker = {
+        getImage: sinon.stub().withArgs('gurl').returns(image)
+      };
+
+      let pusher = new ImagePusher();
+      sinon.stub(pusher, 'getShortName').returns('gurl');
+
+      // when:
+      let ez = new EZDocker(undefined, docker);
+      let promise = ez._pushImages(pusher);
+
+      // then:
+      return promise.should.eventually.be.fulfilled
+        .then(() => {
+          return response.on.should.have.been.called;
+        });
+    });
+
+    it('should fail as a promise', () => {
+      // given:
+      let image = {
+        push: sinon.stub().callsArgWith(1, new Error('darn'))
+      };
+
+      let docker = {
+        getImage: sinon.stub().withArgs('gurl').returns(image)
+      };
+
+      let pusher = new ImagePusher();
+      sinon.stub(pusher, 'getShortName').returns('gurl');
+
+      // when:
+      let ez = new EZDocker(undefined, docker);
+      let promise = ez._pushImages(pusher);
+
+      // then:
+      return promise.should.eventually.be.rejectedWith(Error, 'darn');
+    });
+
+  });
+});
+
+describe('stream_parser', () => {
+
+  beforeEach(() => {
+    if (Log.info.restore) {
+      Log.info.restore();
+    }
+  });
+
+
+  it('should parse JSON stream data and make it pretty ', () => {
+    // given:
+    let chunk = '{"stream":"berries\\n"}\n';
+    let next = sinon.spy();
+    sinon.stub(Log, 'info');
+
+    // when:
+    stream_parser._write(chunk, undefined, next);
+
+    // then:
+    Log.info.should.have.been.calledWith('berries');
+    next.should.have.been.called;
+  });
+
+  it('should print unknown data raw', () => {
+    // given:
+    let chunk = '{"fruit":"berries\\n"}\n';
+    let next = sinon.spy();
+    sinon.stub(Log, 'info');
+
+    // when:
+    stream_parser._write(chunk, undefined, next);
+
+    // then:
+    Log.info.should.have.been.calledWith(chalk.blue('RAW: ') + '{"fruit":"berries\\n"}');
+    next.should.have.been.called;
+  });
+
 });
