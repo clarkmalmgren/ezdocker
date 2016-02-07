@@ -35,7 +35,7 @@ class TarUtils {
   /**
    * Generate a single tar stream that contains multiple inputs that can be mapped to relative paths.
    *
-   * @param {Map<String, String>} mapping a map of source folders to target relative paths
+   * @param {{String, String}} mapping a map of source folders to target relative paths
    * @return {Promise<stream.Readable, Error>} a promise that resolves with the generated combined stream
    */
   all(mapping) {

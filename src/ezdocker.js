@@ -196,10 +196,12 @@ class EZDocker {
   /**
    * Creates a EZDocker using command line arguments.
    *
+   * @param {{}} [args=argv] the arguments that default to those from yargs.argv
+   *
    * @return {EZDocker}
    */
-  static createFromArgs() {
-    return new EZDocker(argv.docker);
+  static createFromArgs(args = argv) {
+    return new EZDocker(args.docker);
   }
 
   /**
@@ -315,6 +317,7 @@ class EZDocker {
         if (error) {
           if (error.statusCode == 404) {
             Log.info('No docker images to remove.');
+            resolve();
           } else {
             Log.error('Removing Docker Image Failed: ' + error.message);
             reject(error);

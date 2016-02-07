@@ -301,10 +301,14 @@ var EZDocker = function () {
     /**
      * Creates a EZDocker using command line arguments.
      *
+     * @param {{}} [args=argv] the arguments that default to those from yargs.argv
+     *
      * @return {EZDocker}
      */
     value: function createFromArgs() {
-      return new EZDocker(_yargs.argv.docker);
+      var args = arguments.length <= 0 || arguments[0] === undefined ? _yargs.argv : arguments[0];
+
+      return new EZDocker(args.docker);
     }
 
     /**
@@ -454,6 +458,7 @@ var EZDocker = function () {
           if (error) {
             if (error.statusCode == 404) {
               Log.info('No docker images to remove.');
+              resolve();
             } else {
               Log.error('Removing Docker Image Failed: ' + error.message);
               reject(error);
