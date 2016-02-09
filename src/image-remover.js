@@ -4,10 +4,17 @@ import Log from './log';
 import Pledge from './pledge';
 
 /**
- * Builder pattern for removing images. Note that tags are not required (and ignored).
+ * Promise to remove images.
  */
 class ImageRemover extends Pledge {
 
+  /**
+   * Constructor
+   *
+   * @param {Docker} docker
+   * @param {String} repositoryName
+   * @param {ImageLister} [imageLister=new ImageLister(docker, repositoryName)]
+   */
   constructor(docker, repositoryName, imageLister) {
     super();
 
@@ -22,8 +29,9 @@ class ImageRemover extends Pledge {
    *
    * @param resolve ignored
    * @param reject ignored
+   * @private
    */
-  start(resolve, reject) {
+  _start(resolve, reject) {
     return this._imageLister
       .then((images) => {
         return Promise.all(_.map(images, (imageInfo) => {

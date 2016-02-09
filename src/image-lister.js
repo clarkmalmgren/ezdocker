@@ -2,10 +2,16 @@ import Log from './log';
 import Pledge from './pledge';
 
 /**
- * Builder pattern for removing images. Note that tags are not required (and ignored).
+ * Promise to list images.
  */
 class ImageLister extends Pledge {
 
+  /**
+   * Constructor
+   *
+   * @param {Docker} docker
+   * @param {String} repositoryNames
+   */
   constructor(docker, repositoryName) {
     super();
 
@@ -13,7 +19,14 @@ class ImageLister extends Pledge {
     this._repositoryName = repositoryName;
   }
 
-  start(resolve, reject) {
+  /**
+   * Actually list the images
+   *
+   * @param {function} resolve
+   * @param {function} reject
+   * @private
+   */
+  _start(resolve, reject) {
     this._docker.listImages({filter: this._repositoryName}, (error, response) => {
       if (error) {
         Log.error('Listing Docker Images Failed: ' + error.message);

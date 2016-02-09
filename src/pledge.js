@@ -61,7 +61,7 @@ class Pledge {
    */
   _execute(resolve, reject) {
     try {
-      let response = this.start(resolve, reject);
+      let response = this._start(resolve, reject);
 
       if (response && typeof response.then == 'function') {
         response
@@ -82,8 +82,9 @@ class Pledge {
    * @param {function} reject invoke this function to reject the promise
    *
    * @abstract
+   * @private
    */
-  start(resolve, reject) {
+  _start(resolve, reject) {
     reject(new TypeError('Must override start function'));
   }
 

@@ -4,8 +4,19 @@ import StateError from './state-error';
 import stream_parser from './stream-parser';
 import TarUtils from './tar-utils';
 
+/**
+ * Both a promise and a builder pattern for creating images. The builder pattern allows for adding a tag
+ * and paths.
+ */
 class ImageBuilder extends Pledge {
 
+  /**
+   * Constructor
+   *
+   * @param {Docker} docker
+   * @param {String} repositoryName
+   * @param {TarUtils} [tarUtils=new TarUtils()]
+   */
   constructor(docker, repositoryName, tarUtils = new TarUtils()) {
     super();
 
@@ -60,8 +71,9 @@ class ImageBuilder extends Pledge {
    *
    * @param resolve
    * @param reject
+   * @private
    */
-  start(resolve, reject) {
+  _start(resolve, reject) {
     if (!this._tag) {
       reject(new Error('Must include a tag to build image'));
       return;

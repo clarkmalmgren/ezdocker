@@ -23,11 +23,18 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
- * Builder pattern for removing images. Note that tags are not required (and ignored).
+ * Promise to list images.
  */
 
 var ImageLister = function (_Pledge) {
   _inherits(ImageLister, _Pledge);
+
+  /**
+   * Constructor
+   *
+   * @param {Docker} docker
+   * @param {String} repositoryNames
+   */
 
   function ImageLister(docker, repositoryName) {
     _classCallCheck(this, ImageLister);
@@ -39,9 +46,17 @@ var ImageLister = function (_Pledge) {
     return _this;
   }
 
+  /**
+   * Actually list the images
+   *
+   * @param {function} resolve
+   * @param {function} reject
+   * @private
+   */
+
   _createClass(ImageLister, [{
-    key: 'start',
-    value: function start(resolve, reject) {
+    key: '_start',
+    value: function _start(resolve, reject) {
       this._docker.listImages({ filter: this._repositoryName }, function (error, response) {
         if (error) {
           _log2.default.error('Listing Docker Images Failed: ' + error.message);
@@ -57,4 +72,4 @@ var ImageLister = function (_Pledge) {
 }(_pledge2.default);
 
 exports.default = ImageLister;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImltYWdlLWxpc3Rlci5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0lBTU07OztBQUVKLFdBRkksV0FFSixDQUFZLE1BQVosRUFBb0IsY0FBcEIsRUFBb0M7MEJBRmhDLGFBRWdDOzt1RUFGaEMseUJBRWdDOztBQUdsQyxVQUFLLE9BQUwsR0FBZSxNQUFmLENBSGtDO0FBSWxDLFVBQUssZUFBTCxHQUF1QixjQUF2QixDQUprQzs7R0FBcEM7O2VBRkk7OzBCQVNFLFNBQVMsUUFBUTtBQUNyQixXQUFLLE9BQUwsQ0FBYSxVQUFiLENBQXdCLEVBQUMsUUFBUSxLQUFLLGVBQUwsRUFBakMsRUFBd0QsVUFBQyxLQUFELEVBQVEsUUFBUixFQUFxQjtBQUMzRSxZQUFJLEtBQUosRUFBVztBQUNULHdCQUFJLEtBQUosQ0FBVSxtQ0FBbUMsTUFBTSxPQUFOLENBQTdDLENBRFM7QUFFVCxpQkFBTyxLQUFQLEVBRlM7U0FBWCxNQUdPO0FBQ0wsa0JBQVEsUUFBUixFQURLO1NBSFA7T0FEc0QsQ0FBeEQsQ0FEcUI7Ozs7U0FUbkI7OztrQkFxQlMiLCJmaWxlIjoiaW1hZ2UtbGlzdGVyLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IExvZyBmcm9tICcuL2xvZyc7XG5pbXBvcnQgUGxlZGdlIGZyb20gJy4vcGxlZGdlJztcblxuLyoqXG4gKiBCdWlsZGVyIHBhdHRlcm4gZm9yIHJlbW92aW5nIGltYWdlcy4gTm90ZSB0aGF0IHRhZ3MgYXJlIG5vdCByZXF1aXJlZCAoYW5kIGlnbm9yZWQpLlxuICovXG5jbGFzcyBJbWFnZUxpc3RlciBleHRlbmRzIFBsZWRnZSB7XG5cbiAgY29uc3RydWN0b3IoZG9ja2VyLCByZXBvc2l0b3J5TmFtZSkge1xuICAgIHN1cGVyKCk7XG5cbiAgICB0aGlzLl9kb2NrZXIgPSBkb2NrZXI7XG4gICAgdGhpcy5fcmVwb3NpdG9yeU5hbWUgPSByZXBvc2l0b3J5TmFtZTtcbiAgfVxuXG4gIHN0YXJ0KHJlc29sdmUsIHJlamVjdCkge1xuICAgIHRoaXMuX2RvY2tlci5saXN0SW1hZ2VzKHtmaWx0ZXI6IHRoaXMuX3JlcG9zaXRvcnlOYW1lfSwgKGVycm9yLCByZXNwb25zZSkgPT4ge1xuICAgICAgaWYgKGVycm9yKSB7XG4gICAgICAgIExvZy5lcnJvcignTGlzdGluZyBEb2NrZXIgSW1hZ2VzIEZhaWxlZDogJyArIGVycm9yLm1lc3NhZ2UpO1xuICAgICAgICByZWplY3QoZXJyb3IpO1xuICAgICAgfSBlbHNlIHtcbiAgICAgICAgcmVzb2x2ZShyZXNwb25zZSk7XG4gICAgICB9XG4gICAgfSk7XG4gIH1cbn1cblxuZXhwb3J0IGRlZmF1bHQgSW1hZ2VMaXN0ZXI7Il0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImltYWdlLWxpc3Rlci5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0lBTU07Ozs7Ozs7Ozs7QUFRSixXQVJJLFdBUUosQ0FBWSxNQUFaLEVBQW9CLGNBQXBCLEVBQW9DOzBCQVJoQyxhQVFnQzs7dUVBUmhDLHlCQVFnQzs7QUFHbEMsVUFBSyxPQUFMLEdBQWUsTUFBZixDQUhrQztBQUlsQyxVQUFLLGVBQUwsR0FBdUIsY0FBdkIsQ0FKa0M7O0dBQXBDOzs7Ozs7Ozs7O2VBUkk7OzJCQXNCRyxTQUFTLFFBQVE7QUFDdEIsV0FBSyxPQUFMLENBQWEsVUFBYixDQUF3QixFQUFDLFFBQVEsS0FBSyxlQUFMLEVBQWpDLEVBQXdELFVBQUMsS0FBRCxFQUFRLFFBQVIsRUFBcUI7QUFDM0UsWUFBSSxLQUFKLEVBQVc7QUFDVCx3QkFBSSxLQUFKLENBQVUsbUNBQW1DLE1BQU0sT0FBTixDQUE3QyxDQURTO0FBRVQsaUJBQU8sS0FBUCxFQUZTO1NBQVgsTUFHTztBQUNMLGtCQUFRLFFBQVIsRUFESztTQUhQO09BRHNELENBQXhELENBRHNCOzs7O1NBdEJwQjs7O2tCQWtDUyIsImZpbGUiOiJpbWFnZS1saXN0ZXIuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgTG9nIGZyb20gJy4vbG9nJztcbmltcG9ydCBQbGVkZ2UgZnJvbSAnLi9wbGVkZ2UnO1xuXG4vKipcbiAqIFByb21pc2UgdG8gbGlzdCBpbWFnZXMuXG4gKi9cbmNsYXNzIEltYWdlTGlzdGVyIGV4dGVuZHMgUGxlZGdlIHtcblxuICAvKipcbiAgICogQ29uc3RydWN0b3JcbiAgICpcbiAgICogQHBhcmFtIHtEb2NrZXJ9IGRvY2tlclxuICAgKiBAcGFyYW0ge1N0cmluZ30gcmVwb3NpdG9yeU5hbWVzXG4gICAqL1xuICBjb25zdHJ1Y3Rvcihkb2NrZXIsIHJlcG9zaXRvcnlOYW1lKSB7XG4gICAgc3VwZXIoKTtcblxuICAgIHRoaXMuX2RvY2tlciA9IGRvY2tlcjtcbiAgICB0aGlzLl9yZXBvc2l0b3J5TmFtZSA9IHJlcG9zaXRvcnlOYW1lO1xuICB9XG5cbiAgLyoqXG4gICAqIEFjdHVhbGx5IGxpc3QgdGhlIGltYWdlc1xuICAgKlxuICAgKiBAcGFyYW0ge2Z1bmN0aW9ufSByZXNvbHZlXG4gICAqIEBwYXJhbSB7ZnVuY3Rpb259IHJlamVjdFxuICAgKiBAcHJpdmF0ZVxuICAgKi9cbiAgX3N0YXJ0KHJlc29sdmUsIHJlamVjdCkge1xuICAgIHRoaXMuX2RvY2tlci5saXN0SW1hZ2VzKHtmaWx0ZXI6IHRoaXMuX3JlcG9zaXRvcnlOYW1lfSwgKGVycm9yLCByZXNwb25zZSkgPT4ge1xuICAgICAgaWYgKGVycm9yKSB7XG4gICAgICAgIExvZy5lcnJvcignTGlzdGluZyBEb2NrZXIgSW1hZ2VzIEZhaWxlZDogJyArIGVycm9yLm1lc3NhZ2UpO1xuICAgICAgICByZWplY3QoZXJyb3IpO1xuICAgICAgfSBlbHNlIHtcbiAgICAgICAgcmVzb2x2ZShyZXNwb25zZSk7XG4gICAgICB9XG4gICAgfSk7XG4gIH1cbn1cblxuZXhwb3J0IGRlZmF1bHQgSW1hZ2VMaXN0ZXI7Il0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9

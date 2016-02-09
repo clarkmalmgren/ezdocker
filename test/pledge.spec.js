@@ -13,7 +13,7 @@ class SimplePledge extends Pledge {
     return this;
   }
 
-  start(resolve, reject) {
+  _start(resolve, reject) {
     if (this._fails) {
       reject(new Error(this._payload));
     } else {
@@ -34,7 +34,7 @@ class PromisePledge extends Pledge {
     return this;
   }
 
-  start() {
+  _start() {
     return new Promise((resolve, reject) => {
       if (this._fails) {
         reject(new Error(this._payload));
