@@ -38,16 +38,13 @@ configuration from command line arguments:
       EZDocker = require('ezdocker').default; // Note that in ES5, EZDocker is bound to ".default"
 
   gulp.task('docker:build-image', function() {
-    return EZDocker.createFromArgs().imageBuilder()
-      .registry('docker.registry.my.company.com')
-      .port(5000)
-      .user('my-team')
-      .repo('my-project')
-      .tag('1.0.0')
-      .addPath('docker')
-      .addPath('dist/production', 'dist')
-      .addPath('other/files', '.')
-      .build();
+    return EZDocker.createFromArgs()
+      .repository('docker.registry.my.company.com:5000/my-team/my-project')
+      .buildImage()
+      .with.tag('1.0.0')
+      .and.path('docker')
+      .and.path('dist/production', 'dist')
+      .and.path('other/files', '.')
   });
 
 })();
@@ -61,14 +58,13 @@ The example below shows how to use EZDocker to build an image with a single fold
 ```javascript
 import EZDocker from 'ezdocker';
 
-new EZDocker().imageBuilder()
-  .registry('docker.registry.my.company.com')
-  .port(5000)
-  .user('my-team')
-  .repo('my-project')
-  .tag('1.0.0')
-  .addPath('docker')
-  .build();
+return EZDocker.createFromArgs()
+  .repository('docker.registry.my.company.com:5000/my-team/my-project')
+  .buildImage()
+  .with.tag('1.0.0')
+  .and.path('docker')
+  .and.path('dist/production', 'dist')
+  .and.path('other/files', '.')
 ```
  
 ## Configuring Connection to Docker Host
@@ -108,19 +104,19 @@ EZDocker also supports pushing and removing images.
 ```javascript
 import EZDocker from 'ezdocker';
 
-new EZDocker().imageRemover()
-  .registry('docker.registry.my.company.com')
-  .port(5000)
-  .user('my-team')
-  .repo('my-project')
-  .remove();
+let repository = new EZDocker().repository('docker.registry.my.company.com:5000/my-team/my-project');
 
-new EZDocker().imagePusher()
-  .registry('docker.registry.my.company.com')
-  .port(5000)
-  .user('my-team')
-  .repo('my-project')
-  .push();
+repository.pushImages()
+  .then(() => {
+    console.log('Images pushed, time to clean up the local repository');
+    return repository.removeImages();
+  })
+  .then(() => {
+    console.log('Great Success!');
+  })
+  .catch(() => {
+    console.error('Great Failure!');
+  ));
 ```
 
 ## Installation

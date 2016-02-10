@@ -1,6 +1,6 @@
 {
   "name": "ezdocker",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Makes building docker containers in javascript a breeze",
   "main": "dist/ezdocker.js",
   "scripts": {
@@ -50,6 +50,7 @@
     "chalk": "^1.1.1",
     "del": "^2.2.0",
     "dockerode": "^2.2.9",
+    "es6-error": "^2.0.2",
     "lodash": "^4.1.0",
     "moment": "^2.11.1",
     "stream": "0.0.2",
