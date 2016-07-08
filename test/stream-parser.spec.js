@@ -18,7 +18,7 @@ describe('stream_parser', () => {
     sinon.stub(Log, 'info');
 
     // when:
-    stream_parser._write(chunk, undefined, next);
+    stream_parser()._write(chunk, undefined, next);
 
     // then:
     Log.info.should.have.been.calledWith('berries');
@@ -32,7 +32,7 @@ describe('stream_parser', () => {
     sinon.stub(Log, 'info');
 
     // when:
-    stream_parser._write(chunk, undefined, next);
+    stream_parser()._write(chunk, undefined, next);
 
     // then:
     Log.info.should.have.been.calledWith(chalk.blue('RAW: ') + '{"fruit":"berries\\n"}');
