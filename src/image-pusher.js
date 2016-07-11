@@ -33,7 +33,7 @@ class ImagePusher extends Pledge {
         Log.error('Pushing Docker Image(s) Failed: ' + error.message);
         reject(error);
       } else {
-        response.pipe(stream_parser);
+        response.pipe(stream_parser());
         response.on('end', () => {
           resolve();
         });

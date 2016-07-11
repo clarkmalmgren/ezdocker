@@ -87,7 +87,7 @@ class ImageBuilder extends Pledge {
           if (error) {
             reject(error);
           } else {
-            response.pipe(stream_parser);
+            response.pipe(stream_parser());
             response.on('end', () => {
               resolve();
             });
