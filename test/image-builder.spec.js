@@ -1,7 +1,7 @@
 import { expect, sinon } from './test_dependencies';
 import ImageBuilder from '../dist/image-builder';
 import StateError from '../dist/state-error';
-import stream_parser from '../dist/stream-parser';
+import Writable from 'stream';
 
 describe('ImageBuilder', () => {
 
@@ -41,7 +41,7 @@ describe('ImageBuilder', () => {
     // then:
     return builder.should.eventually.be.fulfilled
       .then(() => {
-        response.pipe.should.have.been.calledWith(stream_parser);
+        response.pipe.should.have.been.calledWith(sinon.match.instanceOf(Writable));
       });
   });
 
