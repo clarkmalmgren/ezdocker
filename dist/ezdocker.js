@@ -1,10 +1,10 @@
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _yargs = require('yargs');
 
@@ -24,10 +24,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * EZDocker provides easy to use access to builder-pattern classes for building images, removing images and pushing
  * images to a docker registry. See the README for more information on how to use.
  */
-
 var EZDocker = function () {
   _createClass(EZDocker, null, [{
     key: 'createFromArgs',
+
 
     /**
      * Creates a EZDocker using command line arguments.
@@ -37,7 +37,7 @@ var EZDocker = function () {
      * @return {EZDocker}
      */
     value: function createFromArgs() {
-      var args = arguments.length <= 0 || arguments[0] === undefined ? _yargs.argv : arguments[0];
+      var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _yargs.argv;
 
       return new EZDocker(args.docker);
     }
@@ -64,6 +64,7 @@ var EZDocker = function () {
    * @return {Repository}
    */
 
+
   _createClass(EZDocker, [{
     key: 'repository',
     value: function repository(name) {
@@ -75,4 +76,4 @@ var EZDocker = function () {
 }();
 
 exports.default = EZDocker;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV6ZG9ja2VyLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztJQVFNOzs7Ozs7Ozs7OztxQ0FTK0I7VUFBYix3RkFBYTs7QUFDakMsYUFBTyxJQUFJLFFBQUosQ0FBYSxLQUFLLE1BQUwsQ0FBcEIsQ0FEaUM7Ozs7Ozs7Ozs7Ozs7QUFXbkMsV0FwQkksUUFvQkosQ0FBWSxjQUFaLEVBQTRCLE1BQTVCLEVBQW9DOzBCQXBCaEMsVUFvQmdDOztBQUNsQyxTQUFLLE9BQUwsR0FBZSxVQUFVLHdCQUFXLGNBQVgsQ0FBVixDQURtQjtHQUFwQzs7Ozs7Ozs7ZUFwQkk7OytCQTZCTyxNQUFNO0FBQ2YsYUFBTyx5QkFBZSxJQUFmLEVBQXFCLEtBQUssT0FBTCxDQUE1QixDQURlOzs7O1NBN0JiOzs7a0JBa0NTIiwiZmlsZSI6ImV6ZG9ja2VyLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgYXJndiB9IGZyb20gJ3lhcmdzJztcbmltcG9ydCBEb2NrZXIgZnJvbSAnZG9ja2Vyb2RlJztcbmltcG9ydCBSZXBvc2l0b3J5IGZyb20gJy4vcmVwb3NpdG9yeSc7XG5cbi8qKlxuICogRVpEb2NrZXIgcHJvdmlkZXMgZWFzeSB0byB1c2UgYWNjZXNzIHRvIGJ1aWxkZXItcGF0dGVybiBjbGFzc2VzIGZvciBidWlsZGluZyBpbWFnZXMsIHJlbW92aW5nIGltYWdlcyBhbmQgcHVzaGluZ1xuICogaW1hZ2VzIHRvIGEgZG9ja2VyIHJlZ2lzdHJ5LiBTZWUgdGhlIFJFQURNRSBmb3IgbW9yZSBpbmZvcm1hdGlvbiBvbiBob3cgdG8gdXNlLlxuICovXG5jbGFzcyBFWkRvY2tlciB7XG5cbiAgLyoqXG4gICAqIENyZWF0ZXMgYSBFWkRvY2tlciB1c2luZyBjb21tYW5kIGxpbmUgYXJndW1lbnRzLlxuICAgKlxuICAgKiBAcGFyYW0ge3t9fSBbYXJncz1hcmd2XSB0aGUgYXJndW1lbnRzIHRoYXQgZGVmYXVsdCB0byB0aG9zZSBmcm9tIHlhcmdzLmFyZ3ZcbiAgICpcbiAgICogQHJldHVybiB7RVpEb2NrZXJ9XG4gICAqL1xuICBzdGF0aWMgY3JlYXRlRnJvbUFyZ3MoYXJncyA9IGFyZ3YpIHtcbiAgICByZXR1cm4gbmV3IEVaRG9ja2VyKGFyZ3MuZG9ja2VyKTtcbiAgfVxuXG4gIC8qKlxuICAgKiBDb25zdHJ1Y3RzIGEgbmV3IEVaRG9ja2VyLiBTZWUgdGhlIFJFQURNRSBmb3IgdmFsaWQgY29ubmVjdGlvbk9wdHMuIGBkb2NrZXJgIGFuZCBgdGFyVXRpbHNgIGFyZSBvbmx5IGZvciB1c2VcbiAgICogaW4gdW5pdC10ZXN0aW5nIHRvIGluamVjdCBtb2NrIGRlcGVuZGVuY2llcy5cbiAgICpcbiAgICogQHBhcmFtIHtNYXA8U3RyaW5nLFN0cmluZz59IGNvbm5lY3Rpb25PcHRzIGNvbmZpZ3VyZXMgdGhlIGNvbm5lY3Rpb24gbWV0aG9kIHRvXG4gICAqIEBwYXJhbSB7RG9ja2VyfSBbZG9ja2VyXSB1c2VkIGZvciBkZXBlbmRlbmN5IGluamVjdGlvbiwgaWYgc2V0LCBjb25uZWN0aW9uT3B0cyBhcmUgaWdub3JlZFxuICAgKi9cbiAgY29uc3RydWN0b3IoY29ubmVjdGlvbk9wdHMsIGRvY2tlcikge1xuICAgIHRoaXMuX2RvY2tlciA9IGRvY2tlciB8fCBuZXcgRG9ja2VyKGNvbm5lY3Rpb25PcHRzKTtcbiAgfVxuXG4gIC8qKlxuICAgKlxuICAgKiBAcGFyYW0ge1N0cmluZ30gbmFtZSB0aGVcbiAgICogQHJldHVybiB7UmVwb3NpdG9yeX1cbiAgICovXG4gIHJlcG9zaXRvcnkobmFtZSkge1xuICAgIHJldHVybiBuZXcgUmVwb3NpdG9yeShuYW1lLCB0aGlzLl9kb2NrZXIpO1xuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IEVaRG9ja2VyOyJdLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV6ZG9ja2VyLmpzIl0sIm5hbWVzIjpbIkVaRG9ja2VyIiwiYXJncyIsImRvY2tlciIsImNvbm5lY3Rpb25PcHRzIiwiX2RvY2tlciIsIm5hbWUiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7O0FBQUE7O0FBQ0E7Ozs7QUFDQTs7Ozs7Ozs7QUFFQTs7OztJQUlNQSxROzs7OztBQUVKOzs7Ozs7O3FDQU9tQztBQUFBLFVBQWJDLElBQWE7O0FBQ2pDLGFBQU8sSUFBSUQsUUFBSixDQUFhQyxLQUFLQyxNQUFsQixDQUFQO0FBQ0Q7O0FBRUQ7Ozs7Ozs7Ozs7QUFPQSxvQkFBWUMsY0FBWixFQUE0QkQsTUFBNUIsRUFBb0M7QUFBQTs7QUFDbEMsU0FBS0UsT0FBTCxHQUFlRixVQUFVLHdCQUFXQyxjQUFYLENBQXpCO0FBQ0Q7O0FBRUQ7Ozs7Ozs7OzsrQkFLV0UsSSxFQUFNO0FBQ2YsYUFBTyx5QkFBZUEsSUFBZixFQUFxQixLQUFLRCxPQUExQixDQUFQO0FBQ0Q7Ozs7OztrQkFHWUosUSIsImZpbGUiOiJlemRvY2tlci5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IGFyZ3YgfSBmcm9tICd5YXJncyc7XG5pbXBvcnQgRG9ja2VyIGZyb20gJ2RvY2tlcm9kZSc7XG5pbXBvcnQgUmVwb3NpdG9yeSBmcm9tICcuL3JlcG9zaXRvcnknO1xuXG4vKipcbiAqIEVaRG9ja2VyIHByb3ZpZGVzIGVhc3kgdG8gdXNlIGFjY2VzcyB0byBidWlsZGVyLXBhdHRlcm4gY2xhc3NlcyBmb3IgYnVpbGRpbmcgaW1hZ2VzLCByZW1vdmluZyBpbWFnZXMgYW5kIHB1c2hpbmdcbiAqIGltYWdlcyB0byBhIGRvY2tlciByZWdpc3RyeS4gU2VlIHRoZSBSRUFETUUgZm9yIG1vcmUgaW5mb3JtYXRpb24gb24gaG93IHRvIHVzZS5cbiAqL1xuY2xhc3MgRVpEb2NrZXIge1xuXG4gIC8qKlxuICAgKiBDcmVhdGVzIGEgRVpEb2NrZXIgdXNpbmcgY29tbWFuZCBsaW5lIGFyZ3VtZW50cy5cbiAgICpcbiAgICogQHBhcmFtIHt7fX0gW2FyZ3M9YXJndl0gdGhlIGFyZ3VtZW50cyB0aGF0IGRlZmF1bHQgdG8gdGhvc2UgZnJvbSB5YXJncy5hcmd2XG4gICAqXG4gICAqIEByZXR1cm4ge0VaRG9ja2VyfVxuICAgKi9cbiAgc3RhdGljIGNyZWF0ZUZyb21BcmdzKGFyZ3MgPSBhcmd2KSB7XG4gICAgcmV0dXJuIG5ldyBFWkRvY2tlcihhcmdzLmRvY2tlcik7XG4gIH1cblxuICAvKipcbiAgICogQ29uc3RydWN0cyBhIG5ldyBFWkRvY2tlci4gU2VlIHRoZSBSRUFETUUgZm9yIHZhbGlkIGNvbm5lY3Rpb25PcHRzLiBgZG9ja2VyYCBhbmQgYHRhclV0aWxzYCBhcmUgb25seSBmb3IgdXNlXG4gICAqIGluIHVuaXQtdGVzdGluZyB0byBpbmplY3QgbW9jayBkZXBlbmRlbmNpZXMuXG4gICAqXG4gICAqIEBwYXJhbSB7TWFwPFN0cmluZyxTdHJpbmc+fSBjb25uZWN0aW9uT3B0cyBjb25maWd1cmVzIHRoZSBjb25uZWN0aW9uIG1ldGhvZCB0b1xuICAgKiBAcGFyYW0ge0RvY2tlcn0gW2RvY2tlcl0gdXNlZCBmb3IgZGVwZW5kZW5jeSBpbmplY3Rpb24sIGlmIHNldCwgY29ubmVjdGlvbk9wdHMgYXJlIGlnbm9yZWRcbiAgICovXG4gIGNvbnN0cnVjdG9yKGNvbm5lY3Rpb25PcHRzLCBkb2NrZXIpIHtcbiAgICB0aGlzLl9kb2NrZXIgPSBkb2NrZXIgfHwgbmV3IERvY2tlcihjb25uZWN0aW9uT3B0cyk7XG4gIH1cblxuICAvKipcbiAgICpcbiAgICogQHBhcmFtIHtTdHJpbmd9IG5hbWUgdGhlXG4gICAqIEByZXR1cm4ge1JlcG9zaXRvcnl9XG4gICAqL1xuICByZXBvc2l0b3J5KG5hbWUpIHtcbiAgICByZXR1cm4gbmV3IFJlcG9zaXRvcnkobmFtZSwgdGhpcy5fZG9ja2VyKTtcbiAgfVxufVxuXG5leHBvcnQgZGVmYXVsdCBFWkRvY2tlcjsiXX0=
