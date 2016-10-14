@@ -25,6 +25,22 @@ describe('stream_parser', () => {
     next.should.have.been.called;
   });
 
+  it('should parse multiple JSON messages in a single stream chunk and make it pretty ', () => {
+    // given:
+    let chunk = '\n{"stream":"berries\\n"}\n{"stream":"cream\\n"}\n';
+    let next = sinon.spy();
+    sinon.stub(Log, 'info');
+
+    // when:
+    stream_parser()._write(chunk, undefined, next);
+
+    // then:
+    Log.info.should.have.been.called.twice;
+    Log.info.should.have.been.calledWith('berries');
+    Log.info.should.have.been.calledWith('cream');
+    next.should.have.been.called;
+  });
+
   it('should print unknown data raw', () => {
     // given:
     let chunk = '{"fruit":"berries\\n"}\n';
