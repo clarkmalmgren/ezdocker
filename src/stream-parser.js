@@ -11,14 +11,16 @@ import stream from 'stream';
 export default function(){
   return new stream.Writable({
     write: function (chunk, encoding, next) {
-      var data = JSON.parse(chunk.toString());
+      chunk.toString().trim().split('\n').forEach(line => {
+        var data = JSON.parse(line);
 
-      if (data.stream) {
-        data.stream = data.stream.replace(/\n$/, '');
-        Log.info(data.stream);
-      } else {
-        Log.info(chalk.blue('RAW: ') + JSON.stringify(data));
-      }
+        if (data.stream) {
+          data.stream = data.stream.replace(/\n$/, '');
+          Log.info(data.stream);
+        } else {
+          Log.info(chalk.blue('RAW: ') + JSON.stringify(data));
+        }
+      });
 
       next();
     }

@@ -12,9 +12,6 @@
     coveralls = require('gulp-coveralls'),
     sourcemaps = require('gulp-sourcemaps');
 
-  /* Require this to ensure that mocha runs using es6 */
-  require('babel-core/register');
-
   gulp.task('clean', function() {
     return del(['build']);
   });
