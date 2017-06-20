@@ -38,7 +38,7 @@ class ImagePusher extends Pledge {
           resolve();
         });
       }
-    });
+    }, {});
   }
 
 }
