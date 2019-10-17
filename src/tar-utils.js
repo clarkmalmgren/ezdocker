@@ -95,7 +95,7 @@ class TarUtils {
 
     this._process.on('beforeExit', () => {
       if (!cleanupStarted) {
-        this._del(folder);
+        this._del(folder + ' --force');
         cleanupStarted = true;
       }
     });
