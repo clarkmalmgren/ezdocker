@@ -66,7 +66,7 @@ describe('TarUtils', () => {
 
       // then:
       del.should.have.been.calledOnce;
-      del.should.have.been.calledWith('/hawaii');
+      del.should.have.been.calledWith('/hawaii --force');
     });
 
 
