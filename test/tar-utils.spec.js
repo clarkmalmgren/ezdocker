@@ -69,6 +69,28 @@ describe('TarUtils', () => {
       del.should.have.been.calledWith('/hawaii');
     });
 
+    it('force cleanup should happen', () => {
+      // given:
+      let process = {on: sinon.spy()};
+      let del = sinon.spy();
+
+      // when:
+      let tarutils = new TarUtils(del, undefined, undefined, process);
+      tarutils.autoclean('/hawaii', {force: true});
+
+      // then:
+      process.on.should.have.been.calledWith('beforeExit');
+
+      // given:
+      let cleanup = process.on.args[0][1];
+
+      // when:
+      cleanup();
+
+      // then:
+      del.should.have.been.calledWith('/hawaii', {force: true});
+    });
+
 
   });
 

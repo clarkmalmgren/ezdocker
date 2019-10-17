@@ -87,15 +87,20 @@ class TarUtils {
 
   /**
    * Schedule the given folder to be automatically cleaned up when the JavaScript process finishes running.
+   * Cleanup can be forced using optional flag as below:
+   * @example
+   * let tarUtils = new TarUtils();
+   * tarUtils.autoclean('/hawaii', {force: true});
    *
    * @param {String} folder the folder to cleanup
+   * @param {Object} opts the delete options - eg. {force: true}
    */
-  autoclean(folder) {
+  autoclean(folder, opts) {
     var cleanupStarted = false;
 
     this._process.on('beforeExit', () => {
       if (!cleanupStarted) {
-        this._del(folder);
+        this._del(folder, opts);
         cleanupStarted = true;
       }
     });
